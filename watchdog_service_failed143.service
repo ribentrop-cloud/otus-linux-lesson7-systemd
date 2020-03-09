@@ -1,0 +1,11 @@
+[Unit]
+Description=My watchdog service
+
+[Service]
+#Type=oneshot
+Type=simple
+EnvironmentFile=/etc/sysconfig/watchdog
+ExecStart=/bin/bash /root/watchdog.sh $WORD $LOG
+Restart=always
+RestartSec=10
+

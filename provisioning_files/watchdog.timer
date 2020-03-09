@@ -1,0 +1,11 @@
+[Unit]
+Description=My watchdog timer
+Requires=watchdog.service
+
+[Timer]
+OnUnitActiveSec=30
+AccuracySec=1
+Unit=watchdog.service
+
+[Install]
+WantedBy=multi-user.target
