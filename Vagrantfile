@@ -89,4 +89,9 @@ config.vm.provision "shell",inline: "sudo systemctl start watchdog.timer"
 # --- Provisioning to create multiple httpd instances ---
 config.vm.provision "shell", path: "./make-multiple-httpd.sh"
 
+# --- Provisioning to create watchdog service that success on 143 return code ---
+config.vm.provision "shell",inline: "sudo mv /tmp/provisioning_files/watchdog_failure.service /etc/systemd/system"
+config.vm.provision "shell",inline: "sudo mv /tmp/provisioning_files/watchdog_failure.sh /root/watchdog_failure.sh"
+config.vm.provision "shell",inline: "sudo systemctl start watchdog_failure.service"
+
 end

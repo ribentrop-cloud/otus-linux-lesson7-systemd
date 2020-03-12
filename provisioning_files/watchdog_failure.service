@@ -1,0 +1,12 @@
+[Unit]
+Description=My watchdog service - 143
+
+[Service]
+Type=oneshot
+Type=simple
+EnvironmentFile=/etc/sysconfig/watchdog
+ExecStart=/bin/bash /root/otus-linux-lesson7-systemd/watchdog_failure.sh  $WORD $LOG
+Restart=on-failure
+RestartSec=10
+SuccessExitStatus=143
+
