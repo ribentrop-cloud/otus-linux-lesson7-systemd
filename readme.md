@@ -10,7 +10,7 @@
 - watchdog.timer - юнит systemd типа таймер для запуска службы watchdog.service по расписанию
 
 __Проверка:__
-Все необходимые действия для прописаны в Vagrantfile в provision секции: __# Provisioning to create watchdog service and timer__ 
+Все необходимые действия для прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
 
 ### 2. Дополнить unit-файл сервиса httpd возможностью запустить несколько экземпляров сервиса с разными конфигурационными файлами.
 Необходимые файлы:
@@ -18,7 +18,7 @@ __Проверка:__
 - httpd-first, httpd-second - файлы параметров сервисов (httpd-first.service и httpd-second.service), которые ссылаются на разные конфирурации httpd (first.conf и second.conf)
 - first.conf,second.conf - конфигурационные файлы для сервисов сервисов httpd-first.service и httpd-second.service, где указаны порты, по которым слушают службы и PID файлы. Для httpd-second.service __выбран порт 81__, т.е. он не блокируется SELinux.
 __Проверка:__
-Все необходимые действия для прописаны в скрипте make-multiple-httpd.sh. Выполенение скрипта прописано в Vagrantfile в provision секции: __# Provisioning to create multiple httpd instances__.
+Все необходимые действия для прописаны в скрипте make-multiple-httpd.sh. Выполенение скрипта прописано в Vagrantfile в provision секции: __Provisioning to create multiple httpd instances__.
 
 ### 3. Создать unit-фаи?л(ы) для сервиса (скрипт с exit 143):
 Необходимые файлы:
@@ -30,4 +30,4 @@ RestartSec=10
 SuccessExitStatus=143 # - для игнорирования кода 143 как неуспешного
 ```
 __Проверка:__
-Все необходимые действия для прописаны в Vagrantfile в provision секции: __# Provisioning to create watchdog service that success on 143 return code__ .
+Все необходимые действия для прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service that success on 143 return code__ .
