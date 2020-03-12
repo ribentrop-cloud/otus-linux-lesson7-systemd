@@ -32,5 +32,4 @@ SuccessExitStatus=143 # - для игнорирования кода 143 как 
 ```
 __Проверка:__
 Все необходимые действия для прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service that success on 143 return code__ .  
-
-При старте сервиса в логе /var/log/messages будет строка _My FAILURE-143 watchdog service_
+При старте сервиса в логе /var/log/messages будет строка __My FAILURE-143 watchdog service__
