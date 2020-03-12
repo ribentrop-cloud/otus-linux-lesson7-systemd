@@ -17,7 +17,8 @@ __Проверка:__
 - httpd@.service - модифицированная копия httpd.service для запуска сервиса с паредачей параметров
 - httpd-first, httpd-second - файлы параметров сервисов (httpd-first.service и httpd-second.service), которые ссылаются на разные конфирурации httpd (first.conf и second.conf)
 - first.conf,second.conf - конфигурационные файлы для сервисов сервисов httpd-first.service и httpd-second.service, где указаны порты, по которым слушают службы и PID файлы. Для httpd-second.service __выбран порт 81__, т.е. он не блокируется SELinux.  
-__Проверка:__
+  
+ __Проверка:__
 Все необходимые действия для прописаны в скрипте make-multiple-httpd.sh. Выполенение скрипта прописано в Vagrantfile в provision секции: __Provisioning to create multiple httpd instances__.
 
 ### 3. Создать unit-фаи?л(ы) для сервиса (скрипт с exit 143):
