@@ -6,7 +6,7 @@
 
 ### 1. Создать сервис и unit-файлы для этого сервиса.
 
-Все необходимые действия для прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
+Все необходимые действия Vagrant прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
 Необходимые файлы лежат в папке __provisioning_files__:
 - watchdog.sh - скрипт для парсинга логов
 - watchdog - конфигурационный файл для службы watchdog.service
@@ -25,7 +25,7 @@ __Проверка:__
 8. sudo tail -f /var/log/messages - скрипт каждые 30 сек оставляет запись "This is __watchdog__ servce! I found pattern, Master!"
 
 ### 2. Дополнить unit-файл сервиса httpd возможностью запустить несколько экземпляров сервиса с разными конфигурационными файлами.
-Все необходимые действия для прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
+Все необходимые действия для Vagrant прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
 Необходимые файлы лежат в папке __provisioning_files__:
 - httpd@.service - модифицированная копия httpd.service для запуска сервиса с паредачей параметров
 - httpd-first, httpd-second - файлы параметров сервисов (httpd-first.service и httpd-second.service), которые ссылаются на разные конфирурации httpd (first.conf и second.conf)
@@ -39,7 +39,7 @@ __Проверка:__
 5. netstat -an  | grep -Ew "80|81"
 
 ### 3. Создать unit-фаи?л(ы) для сервиса (скрипт с exit 143):
-Все необходимые действия для прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service that success on 143 return code__ .  
+Все необходимые действия для Vagrant прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service that success on 143 return code__ .  
 Необходимые файлы лежат в папке __provisioning_files__:
 - watchdog_failure.sh - скрипт для парсинга логов c кодом успешного завершения 143. Обращаю внимание, что ради разнообразия сделал следующее - код выхода скрипта в случе, если в логе __не__ найдена искомая строка (ALERT) равен 1 и в этом случае служба watchdog_failure.service перезапускает скрипт
 - watchdog_failure.service - для запуска скрипта watchdog_failure.sh. Реализован рестарт службы в случае неуcпешного завершения скрипта:
