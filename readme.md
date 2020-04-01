@@ -50,6 +50,7 @@ SuccessExitStatus=143 # - для игнорирования кода 143 как 
 ```
 - watchdog_failure - конфигурационный файл для службы watchdog_failure.service  
 - watchdog_failure.log - лог файл с ОТСУТСТВУЮЩИМ ключевым словом ALERT для проверки  
+  
 __Проверка:__
 1. vagrant up  
 2. vagrant ssh  
