@@ -49,7 +49,7 @@ RestartSec=10
 SuccessExitStatus=143 # - для игнорирования кода 143 как неуспешного
 ```
 - watchdog_failure - конфигурационный файл для службы watchdog_failure.service  
-- watchdog_failure.log - лог файл с ОТСУТСТВУЮЩИМ ключевым словом ALERT для проверки
+- watchdog_failure.log - лог файл с ОТСУТСТВУЮЩИМ ключевым словом ALERT для проверки  
 __Проверка:__
 1. vagrant up  
 2. vagrant ssh  
@@ -58,5 +58,5 @@ __Проверка:__
 5. systemctl status watchdog.service
 6. systemctl status watchdog.timer
 7. cat /etc/sysconfig/watchdog
-8. sudo tail -f /var/log/messages - скрипт каждые 30 сек оставляет запись "This is __watchdog_failure__ servce! Pattern not found . Still working , Master!"
+8. sudo tail -f /var/log/messages - скрипт каждые 30 сек оставляет запись "This is __watchdog_failure__ servce! Pattern not found . Still working , Master!"  
 Если добавить в  watchdog_failure.log слово ALERT, то скрипт выйдет по коду 143. Код 143 будет успешным кодом завершения
