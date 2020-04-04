@@ -1,0 +1,11 @@
+[Unit] 
+Description=Otus Jira
+After=network.target
+
+[Service] 
+Type=forking
+ExecStart=/opt/atlassian/jira/bin/start-jira.sh
+ExecStop=/opt/atlassian/jira/bin/stop-jira.sh
+
+[Install] 
+WantedBy=multi-user.target 

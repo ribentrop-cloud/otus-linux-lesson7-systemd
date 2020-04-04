@@ -4,7 +4,7 @@ Description=My FAILURE-143 watchdog service
 [Service]
 Type=oneshot
 Type=simple
-EnvironmentFile=/etc/sysconfig/watchdog
+EnvironmentFile=/etc/sysconfig/watchdog_failure
 ExecStart=/bin/bash /root/watchdog_failure.sh  $WORD $LOG
 Restart=on-failure
 RestartSec=10

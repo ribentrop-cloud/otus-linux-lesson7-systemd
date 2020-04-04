@@ -1,0 +1,9 @@
+[Unit]
+Description=socket unit for watchdog_failure.service
+PartOf=watchdog_failure.service
+
+[Socket]
+ListenStream=127.0.0.1:9999
+
+[Install]
+WantedBy=sockets.target

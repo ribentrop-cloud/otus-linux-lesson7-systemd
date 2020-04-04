@@ -6,7 +6,7 @@ DATE=`date`
 
 if grep $WORD $LOG &> /dev/null
 then
-        logger "$DATE : I found, Master!"
+        logger "$DATE : This is NORMAL WATCHDOG servce! I found pattern, Master!"
 else
         exit 0
 fi
