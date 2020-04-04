@@ -37,10 +37,10 @@ __Проверка:__
   
 __Проверка органичения ресурсов (перенесено собственнолично из п.3., т.к. в п.2. это более наглядно)__.  
 1. systemctl status httpd@second - видим ограничения:
-'''bash
+```bash
 Tasks: 3 (limit: 3)
 Memory: 4.5M (limit: 10.0M)
-'''
+```
 2. find /sys/fs/cgroup -name httpd@second.service - видим созданные Cgroups: blkio, pids, memory, cpu,cpuacct. Таким образом, мы ограничили процесс по CPU,MEM,IO,Tasks.
 
 
