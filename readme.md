@@ -33,7 +33,8 @@ __Проверка:__
 2. vagrant ssh  
 3. systemctl status httpd@first
 4. systemctl status httpd@second
-5. netstat -an  | grep -Ew "80|81"
+5. netstat -an  | grep -Ew "80|81"  
+  
 __Проверка органичения ресурсов (перенесено собственнолично из п.3., т.к. в п.2. это более наглядно)__.  
 1. systemctl status httpd@second - видим ограничения:
 '''sh
