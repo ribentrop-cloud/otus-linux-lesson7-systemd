@@ -69,3 +69,13 @@ __Проверка:__
 6. date | nc 127.0.0.1 9999 - пишем в порт 9999, нажимаем Ctrl+C
 7. sudo tail -f /var/log/messages - скрипт каждые 10 сек (период перезапуска) оставляет запись "This is __FAILURE WATCHDOG__ servce! Pattern not found . Still working , Master!", выходит со статусом 1 и перезапускается через 10 сек. То есть сервис активирован по сокету.
 11. sudo echo "ALERT" >> /var/log/watchdog_failure.log - если добавить в  watchdog_failure.log ключевое слово ALERT, то скрипт выйдет по коду 143. Код 143 будет __успешным__ кодом завершения. В логе будет запись "This is __FAILURE WATCHDOG__ servce! I found pattern, Master!"
+
+### 4*. Создать unit-фаи?л(ы) Atlassian Jira.
+Все необходимые действия для Vagrant прописаны в Vagrantfile в provision секции: __4. Provisioning to install Jira and make Jira service__ . Необходимые файлы лежат в папке __provisioning_files__:
+ - jira.service - файл сервиса jira
+Скрипт jira-install.sh рядом с Vagrant file устанавливает Jira.
+
+__Проверка:__
+1. vagrant up  
+2. vagrant ssh  
+3. systemctl status jira.service - должен быть  __active__
