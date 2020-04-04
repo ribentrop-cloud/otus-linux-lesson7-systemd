@@ -5,6 +5,7 @@
 ### 1. Создать сервис и unit-файлы для этого сервиса.
 
 Все необходимые действия Vagrant прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
+.  
 Необходимые файлы лежат в папке __provisioning_files__:
 - watchdog.sh - скрипт для парсинга логов
 - watchdog - конфигурационный файл для службы watchdog.service
@@ -15,26 +16,33 @@
 __Проверка:__
 1. vagrant up  
 2. vagrant ssh  
-3. cat  /etc/systemd/system/watchdog.service
-4. cat  /etc/systemd/system/watchdog.timer
-5. systemctl status watchdog.service - должен быть  __inactive (dead) since..._
-6. systemctl status watchdog.timer - должен быть __active (waiting)__
-7. cat /etc/sysconfig/watchdog
-8. sudo tail -f /var/log/messages - скрипт каждые 30 сек оставляет запись "This is __NORMAL WATCHDOG__ servce! I found pattern, Master!"
+3. systemctl status watchdog.service - должен быть  __inactive (dead) since..._
+4. systemctl status watchdog.timer - должен быть __active (waiting)__
+5. sudo tail -f /var/log/messages - скрипт каждые 30 сек оставляет запись "This is __NORMAL WATCHDOG__ servce! I found pattern, Master!"
 
 ### 2. Дополнить unit-файл сервиса httpd возможностью запустить несколько экземпляров сервиса с разными конфигурационными файлами.
 Все необходимые действия для Vagrant прописаны в Vagrantfile в provision секции: __Provisioning to create watchdog service and timer__ 
+.  
 Необходимые файлы лежат в папке __provisioning_files__:
 - httpd@.service - модифицированная копия httpd.service для запуска сервиса с паредачей параметров
 - httpd-first, httpd-second - файлы параметров сервисов (httpd-first.service и httpd-second.service), которые ссылаются на разные конфирурации httpd (first.conf и second.conf)
 - first.conf,second.conf - конфигурационные файлы для сервисов сервисов httpd-first.service и httpd-second.service, где указаны порты, по которым слушают службы и PID файлы. Для httpd-second.service __выбран порт 81__, т.е. он не блокируется SELinux.  
-  
+
  __Проверка:__
 1. vagrant up  
 2. vagrant ssh  
 3. systemctl status httpd@first
 4. systemctl status httpd@second
 5. netstat -an  | grep -Ew "80|81"
+__Проверка органичения ресурсов (перенесено собственнолично из п.3., т.к. в п.2. это более наглядно)__.  
+1. systemctl status httpd@second - видим ограничения:
+'''sh
+Tasks: 3 (limit: 3)
+Memory: 4.5M (limit: 10.0M)
+'''
+2. find /sys/fs/cgroup -name httpd@second.service - видим созданные Cgroups: blkio, pids, memory, cpu,cpuacct. Таким образом, мы ограничили процесс по CPU,MEM,IO,Tasks.
+
+
 
 ### 3. Создать unit-фаи?л(ы) для сервиса (скрипт с exit 143):
 __*реализовать активацию по .path или .socket.__
@@ -54,12 +62,9 @@ SuccessExitStatus=143 # - для игнорирования кода 143 как 
 __Проверка:__
 1. vagrant up  
 2. vagrant ssh  
-3. cat  /etc/systemd/system/watchdog_failure.service  
-4. cat  /etc/systemd/system/watchdog_failure.socket
-5. systemctl status watchdog_failure.service - должен быть  __inactive (dead)_
-6. systemctl status watchdog_failure.socket  - socket unit запущен
-7. netstat -an | grep 9999 - видим открытый порт watchdog_failure.socket 
-8. cat /etc/sysconfig/watchdog_failure
-9. date | nc 127.0.0.1 9999 - кидаем в порт 9999 дату, нажимаем Ctrl+C и смотрим лог
-10. sudo tail -f /var/log/messages - скрипт каждые 10 сек (период перезапуска) оставляет запись "This is __FAILURE WATCHDOG__ servce! Pattern not found . Still working , Master!", выходит со статусом 1 и перезапускается через 10 сек
-11. sudo echo "ALERT" >> /var/log/watchdog_failure.log - если добавить в  watchdog_failure.log ключевое слово ALERT, то скрипт выйдет по коду 143. Код 143 будет успешным кодом завершения. В логе будет запись "This is __FAILURE WATCHDOG__ servce! I found pattern, Master!"
+3. systemctl status watchdog_failure.service - должен быть  __inactive (dead)_
+4. systemctl status watchdog_failure.socket  - должен быть  __active (listening)__
+5. netstat -an | grep 9999 - видим открытый порт watchdog_failure.socket 
+6. date | nc 127.0.0.1 9999 - пишем в порт 9999, нажимаем Ctrl+C
+7. sudo tail -f /var/log/messages - скрипт каждые 10 сек (период перезапуска) оставляет запись "This is __FAILURE WATCHDOG__ servce! Pattern not found . Still working , Master!", выходит со статусом 1 и перезапускается через 10 сек. То есть сервис активирован по сокету.
+11. sudo echo "ALERT" >> /var/log/watchdog_failure.log - если добавить в  watchdog_failure.log ключевое слово ALERT, то скрипт выйдет по коду 143. Код 143 будет __успешным__ кодом завершения. В логе будет запись "This is __FAILURE WATCHDOG__ servce! I found pattern, Master!"
